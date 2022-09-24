@@ -108,9 +108,7 @@ export default defineComponent({
                     class="relative"
                     id="sidenavProduk"
                     v-show="
-                        ($page.props.user.role == 'karyawan' &&
-                            $page.props.karyawan) ||
-                        $page.props.user.role == 'pemilik'
+                        $page.props.akses.admin || $page.props.akses.owner
                     "
                 >
                     <a
@@ -194,9 +192,7 @@ export default defineComponent({
                     class="relative"
                     id="sidenavSparepart"
                     v-show="
-                        ($page.props.user.role == 'karyawan' &&
-                            $page.props.karyawan) ||
-                        $page.props.user.role == 'pemilik'
+                        $page.props.akses.admin || $page.props.akses.owner
                     "
                 >
                     <a
@@ -427,9 +423,7 @@ export default defineComponent({
                 <li
                     class="relative"
                     v-show="
-                        ($page.props.user.role == 'karyawan' &&
-                            $page.props.karyawan) ||
-                        $page.props.user.role == 'pemilik'
+                        $page.props.akses.admin || $page.props.akses.owner
                     "
                 >
                     <Link
@@ -453,9 +447,7 @@ export default defineComponent({
                 <li
                     class="relative"
                     v-show="
-                        ($page.props.user.role == 'karyawan' &&
-                            $page.props.karyawan) ||
-                        $page.props.user.role == 'pemilik'
+                        $page.props.akses.admin || $page.props.akses.owner
                     "
                 >
                     <Link
@@ -479,9 +471,7 @@ export default defineComponent({
                 <li
                     class="relative"
                     v-show="
-                        ($page.props.user.role == 'karyawan' &&
-                            $page.props.karyawan) ||
-                        $page.props.user.role == 'pemilik'
+                        $page.props.akses.admin || $page.props.akses.owner
                     "
                 >
                     <Link

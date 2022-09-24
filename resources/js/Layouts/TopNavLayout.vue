@@ -94,8 +94,7 @@ export default defineComponent({
                                 <li
                                     class="nav-item p-1"
                                     v-show="
-                                        $page.props.user.role == 'karyawan' ||
-                                        $page.props.user.role == 'pemilik'
+                                        $page.props.akses.owner||$page.props.akses.role=='karyawan'
                                     "
                                 >
                                     <Link
@@ -129,6 +128,7 @@ export default defineComponent({
                                     : ''
                             "
                             :href="route('pesan-jasa.index')"
+                            v-show="$page.props.akses.pelanggan"
                         >
                             <span
                                 ><font-awesome-icon
@@ -176,7 +176,7 @@ export default defineComponent({
                             >
                                 <img
                                     v-if="
-                                        $page.props.user.role == 'pengguna' &&
+                                        $page.props.akses.role=='pelanggan' &&
                                         $page.props.user.profile_photo_path !=
                                             null
                                     "
@@ -192,7 +192,7 @@ export default defineComponent({
                                 />
                                 <img
                                     v-if="
-                                        $page.props.user.role == 'karyawan' &&
+                                        $page.props.akses.role=='karyawan' &&
                                         $page.props.user.profile_photo_path !=
                                             null
                                     "
@@ -235,7 +235,7 @@ export default defineComponent({
                                 <li>
                                     <Link
                                         v-if="
-                                            $page.props.user.role == 'pelanggan'
+                                            $page.props.akses.role == 'pelanggan'
                                         "
                                         class="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100"
                                         :href="route('profile-pelanggan.show')"
@@ -261,7 +261,7 @@ export default defineComponent({
                                 <li>
                                     <Link
                                         v-if="
-                                            $page.props.user.role == 'pelanggan'
+                                            $page.props.akses.role == 'pelanggan'
                                         "
                                         class="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100"
                                         :href="route('alamat-pelanggan.index')"

@@ -64,7 +64,7 @@ export default defineComponent({
                                         :src="
                                             $page.props.asset +
                                             '/karyawan/foto/' +
-                                            karyawan.profile_photo_path
+                                            $page.props.user.profile_photo_path
                                         "
                                         alt="karyawan"
                                     />

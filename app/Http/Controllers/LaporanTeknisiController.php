@@ -14,7 +14,7 @@ class LaporanTeknisiController extends Controller
     public function index()
     {
         return Inertia::render('LaporanTeknisi/Index', [
-            'laporan' => LaporanTeknisi::all()
+            'laporan' => LaporanTeknisi::paginate(10)
         ]);
     }
 
