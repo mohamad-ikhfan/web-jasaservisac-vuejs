@@ -24,11 +24,10 @@ return new class extends Migration
             $table->string('id_properti');
             $table->string('id_alamat');
             $table->string('tanggal_booking');
+            $table->string('sparepart')->nullable();
             $table->double('total_tagihan');
             $table->string('status_pesanan');
-            $table->enum('status_pembayaran', ['menunggu pembayaran', 'lunas'])->nullable();
-            $table->dateTime('selesai')->nullable();
-            $table->enum('metode_pembayaran', ['cod', 'transfer'])->nullable();
+            $table->string('waktu_selesai')->nullable();
             $table->timestamps();
         });
     }

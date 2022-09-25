@@ -73,7 +73,7 @@ class PesanJasaController extends Controller
 
         $kategori = KategoriLayanan::where('slug', strtolower(str_replace(' ', '-', $request->kategori)))->first();
         $id_pelanggan = Pelanggan::where('id_user', auth()->user()->id)->first()->id;
-        $no_pesanan = $id_pelanggan . $kategori->id . $request->jenis_layanan . date('dmY', strtotime(now()));
+        $no_pesanan = $id_pelanggan . $kategori->id . $request->jenis_layanan . str_replace('-', '', $request->tanggal_booking);
         $total_tagihan = ($request->unit * $request->harga_layanan) + $request->biaya_properti;
 
         $pesanan = PesanJasa::create([

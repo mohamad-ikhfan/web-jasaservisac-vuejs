@@ -9,6 +9,8 @@ import { Link } from "@inertiajs/inertia-vue3";
 export default defineComponent({
   props: {
     laporan: Object,
+    teknisi: Object,
+    sparepart: Object,
   },
 
   components: {
@@ -26,23 +28,23 @@ export default defineComponent({
 
   methods: {
     addData() {
-      this.$inertia.get(route("kategori-layanan.create"));
+      this.$inertia.get(route("laporan-teknisi.create"));
     },
 
     deleteData(id) {
       if (!confirm("Yakin Hapus data ini?")) return;
-      this.$inertia.delete(route("kategori-layanan.destroy", { id }));
+      this.$inertia.delete(route("laporan-teknisi.destroy", { id }));
     },
 
     searchData: _.throttle(function () {
       this.$inertia.replace(
-        this.route("kategori-layanan.index", { search: this.search })
+        this.route("laporan-teknisi.index", { search: this.search })
       );
     }),
 
     clearSearch: _.throttle(function () {
       this.$inertia.replace(
-        this.route("kategori-layanan.index", { search: "" })
+        this.route("laporan-teknisi.index", { search: "" })
       );
       this.search = "";
     }),
@@ -181,7 +183,7 @@ export default defineComponent({
                             font-bold
                           "
                         >
-                          Logo
+                          No Pesanan
                         </th>
                         <th
                           scope="col"
@@ -195,7 +197,7 @@ export default defineComponent({
                             font-bold
                           "
                         >
-                          Nama
+                          Tanggal Pengerjaan
                         </th>
                         <th
                           scope="col"
@@ -209,7 +211,7 @@ export default defineComponent({
                             font-bold
                           "
                         >
-                          Deskripsi
+                          Teknisi
                         </th>
                         <th
                           scope="col"
@@ -254,6 +256,11 @@ export default defineComponent({
                             {{ row.no_pesanan }}
                           </td>
                           <td
+                            class="text-sm text-gray-900 font-light px-6 py-4"
+                          >
+                            {{ row.tanggal_selesai }}
+                          </td>
+                          <td
                             class="
                               text-sm text-gray-900
                               font-light
@@ -262,12 +269,16 @@ export default defineComponent({
                               whitespace-nowrap
                             "
                           >
-                            {{ row.teknisi }}
-                          </td>
-                          <td
-                            class="text-sm text-gray-900 font-light px-6 py-4"
-                          >
-                            {{ row.sparepart }}
+                            <template
+                              v-for="(index, nik) in row.teknisi"
+                              :key="nik"
+                            >
+                              <template v-for="tek in teknisi" :key="tek">
+                                <template v-if="tek.nik == row.teknisi[nik]">
+                                  {{ nik + 1 }}. {{ tek.nama_lengkap }}<br />
+                                </template>
+                              </template>
+                            </template>
                           </td>
                           <td
                             class="
@@ -290,7 +301,6 @@ export default defineComponent({
                                 mx-1
                               "
                               title="Detail"
-                              :href="route('kategori-layanan.show', row.id)"
                             >
                               <font-awesome-icon
                                 icon="fa-solid fa-circle-info"
@@ -308,27 +318,10 @@ export default defineComponent({
                                 mx-1
                               "
                               title="Ubah"
-                              :href="route('kategori-layanan.edit', row.id)"
                             >
                               <font-awesome-icon
                                 icon="fa-solid fa-pen-to-square"
                               />
-                            </Link>
-                            <Link
-                              class="
-                                text-sm
-                                inline-block
-                                p-1.5
-                                leading-none
-                                bg-red-500
-                                text-white
-                                rounded
-                                mx-1
-                              "
-                              title="Hapus"
-                              @click.prevent="deleteData(row.id)"
-                            >
-                              <font-awesome-icon icon="fa-solid fa-trash-can" />
                             </Link>
                           </td>
                         </tr>

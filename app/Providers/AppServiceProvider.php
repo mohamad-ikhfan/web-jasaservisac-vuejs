@@ -32,15 +32,15 @@ class AppServiceProvider extends ServiceProvider
         Inertia::share('akses', function () {
             $karyawan = '';
             if (auth()->user()) {
-                if (auth()->user()->role=='karyawan') {
+                if (auth()->user()->role == 'karyawan') {
                     $karyawan = Karyawan::where('id_user', auth()->user()->id)->first()->bagian;
                 }
             }
             return [
-                'owner'=> auth()->user() ? auth()->user()->role == 'owner' : false,
-                'pelanggan'=> auth()->user() ? auth()->user()->role == 'pelanggan' : false,
-                'admin'=> auth()->user() ? $karyawan == 'administrasi' : false,
-                'teknisi'=> auth()->user() ? $karyawan == 'teknisi' : false,
+                'pemilik' => auth()->user() ? auth()->user()->role == 'pemilik' : false,
+                'pelanggan' => auth()->user() ? auth()->user()->role == 'pelanggan' : false,
+                'admin' => auth()->user() ? $karyawan == 'administrasi' : false,
+                'teknisi' => auth()->user() ? $karyawan == 'teknisi' : false,
                 'role' => auth()->user() ? auth()->user()->role : ''
             ];
         });

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('no_pesanan')->unique();
             $table->string('nik_penerima')->nullable();
             $table->string('jadwal_pengerjaan')->nullable();
-            $table->dateTime('tanggal_selesai')->nullable();
+            $table->string('tanggal_selesai')->nullable();
             $table->timestamps();
         });
     }
