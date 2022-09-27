@@ -11,10 +11,6 @@ use Inertia\Inertia;
 class StokSparepartController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware(AccessAdminMiddleware::class);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -55,7 +51,7 @@ class StokSparepartController extends Controller
             'jumlah' => 'required|numeric'
         ]);
 
-        $stok = StokSparepart::where('id_sparepart', $request->sparepart)->where('tipe', 'masuk')->first();
+        $stok = StokSparepart::where('id_sparepart', $request->sparepart)->first();
 
         if ($stok) {
             $sisa = $stok->jumlah + $request->jumlah;
@@ -69,8 +65,7 @@ class StokSparepartController extends Controller
 
         StokSparepart::create([
             'id_sparepart' => $request->sparepart,
-            'jumlah' => $request->jumlah,
-            'tipe' => 'masuk'
+            'jumlah' => $request->jumlah
         ]);
 
         return redirect(route('stok-sparepart.index'))->with('message', 'Data stok berhasil ditambahkan.');

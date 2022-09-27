@@ -10,6 +10,7 @@ use App\Models\Pelanggan;
 use App\Models\PesananPelanggan;
 use App\Models\PesanJasa;
 use App\Models\Properti;
+use App\Models\Sparepart;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -113,8 +114,29 @@ class PesanJasaController extends Controller
             ->join('alamat_pelanggans', 'alamat_pelanggans.id', '=', 'pesan_jasas.id_alamat')
             ->where('no_pesanan', $id)->first();
 
+
+        $sparepart = Sparepart::all();
+        $biaya_part = 0;
+
+        if ($pesanan->status_pesanan == 'selesai' && $pesanan->id_sparepart != null) {
+            $sparepart_id = explode(",", $pesanan->id_sparepart);
+            $sparepart_qty = explode(",", $pesanan->qty_sparepart);
+            for ($i = 0; $i < count($sparepart_id); $i++) {
+                $id = $sparepart_id[$i];
+                $qty =  $sparepart_qty[$i];
+
+                $sparepartis = Sparepart::find($id);
+
+                $harga_part = $sparepartis->harga;
+
+                $biaya_part += $harga_part * $qty;
+            }
+        }
+
         return Inertia::render('PesanJasa/Show', [
-            'pesanan' => $pesanan
+            'pesanan' => $pesanan,
+            'sparepart' => $sparepart,
+            'biaya_part' => $biaya_part
         ]);
     }
 

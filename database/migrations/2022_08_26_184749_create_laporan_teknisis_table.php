@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('no_pesanan')->unique();
             $table->string('teknisi');
-            $table->string('sparepart')->nullable();
+            $table->string('id_sparepart')->nullable();
+            $table->string('qty_sparepart')->nullable();
             $table->timestamps();
         });
     }

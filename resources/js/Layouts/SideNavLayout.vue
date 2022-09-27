@@ -242,11 +242,7 @@ export default defineComponent({
           </ul>
         </li>
 
-        <li
-          class="relative"
-          id="sidenavSparepart"
-          v-show="$page.props.akses.admin || $page.props.akses.pemilik"
-        >
+        <li class="relative" id="sidenavSparepart">
           <a
             class="
               flex
@@ -298,7 +294,10 @@ export default defineComponent({
             aria-labelledby="sidenavSparepart"
             data-bs-parent="#sidenavSecExample"
           >
-            <li class="relative">
+            <li
+              class="relative"
+              v-show="$page.props.akses.admin || $page.props.akses.pemilik"
+            >
               <Link
                 class="
                   flex

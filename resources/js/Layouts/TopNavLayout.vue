@@ -161,7 +161,7 @@ export default defineComponent({
               /></span>
               <span class="mx-2">Pesanan Saya</span>
             </Link>
-            <div class="dropdown relative">
+            <!-- <div class="dropdown relative">
               <a
                 class="
                   text-gray-500
@@ -239,7 +239,7 @@ export default defineComponent({
                   >
                 </li>
               </ul>
-            </div>
+            </div> -->
             <div class="dropdown relative ml-5">
               <a
                 class="dropdown-toggle flex items-center hidden-arrow"

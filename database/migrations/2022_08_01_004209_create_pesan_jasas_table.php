@@ -24,7 +24,8 @@ return new class extends Migration
             $table->string('id_properti');
             $table->string('id_alamat');
             $table->string('tanggal_booking');
-            $table->string('sparepart')->nullable();
+            $table->string('id_sparepart')->nullable();
+            $table->string('qty_sparepart')->nullable();
             $table->double('total_tagihan');
             $table->string('status_pesanan');
             $table->string('waktu_selesai')->nullable();

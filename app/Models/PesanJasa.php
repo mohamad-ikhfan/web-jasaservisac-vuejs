@@ -9,8 +9,4 @@ class PesanJasa extends Model
 {
     use HasFactory;
     protected $guarded = [];
-
-    protected $casts = [
-        'sparepart' => 'array'
-    ];
 }

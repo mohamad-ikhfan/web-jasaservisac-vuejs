@@ -8,6 +8,8 @@ import Moment from "moment";
 export default defineComponent({
   props: {
     pesanan: Object,
+    sparepart: Object,
+    biaya_part: String,
   },
 
   components: {
@@ -20,6 +22,8 @@ export default defineComponent({
   data() {
     return {
       progress: false,
+      id_sparepart: String(this.pesanan.id_sparepart).split(","),
+      qty_sparepart: String(this.pesanan.qty_sparepart).split(","),
     };
   },
 
@@ -228,12 +232,36 @@ export default defineComponent({
                       </td>
                       <td class="p-2">
                         <div class="text-gray-900 capitalize">
-                          {{ pesanan.sparepart }}
+                          <template
+                            v-for="index in id_sparepart.length"
+                            :key="index"
+                            v-bind="pesanan.id_sparepart != null"
+                          >
+                            <template v-for="sp in sparepart" :key="sp">
+                              <div v-show="sp.id == id_sparepart[index - 1]">
+                                {{ sp.nama_sparepart }}
+                                <span
+                                  class="lowercase text-xs"
+                                  v-on:loadeddata="
+                                    $emit(
+                                      (this.biaya_sparepart +=
+                                        sp.harga * qty_sparepart[index - 1])
+                                    )
+                                  "
+                                  >{{
+                                    formatNumber(sp.harga) +
+                                    "x" +
+                                    qty_sparepart[index - 1]
+                                  }}</span
+                                >
+                              </div>
+                            </template>
+                          </template>
                         </div>
                       </td>
                       <td class="p-2">
                         <div class="text-gray-900 capitalize">
-                          {{ "Rp." + "0" }}
+                          {{ "Rp." + formatNumber(biaya_part) }}
                         </div>
                       </td>
                     </tr>

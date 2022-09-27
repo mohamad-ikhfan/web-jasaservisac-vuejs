@@ -8,6 +8,8 @@ import Moment from "moment";
 export default defineComponent({
   props: {
     pesanan: Object,
+    sparepart: Object,
+    biaya_part: String,
   },
 
   components: {
@@ -15,6 +17,13 @@ export default defineComponent({
     ActionMessage,
     Moment,
     Link,
+  },
+
+  data() {
+    return {
+      id_sparepart: String(this.pesanan.id_sparepart).split(","),
+      qty_sparepart: String(this.pesanan.qty_sparepart).split(","),
+    };
   },
 
   methods: {
@@ -179,6 +188,56 @@ export default defineComponent({
                         <td class="p-2">
                           <div class="text-gray-900 capitalize">
                             {{ "Rp." + formatNumber(pesanan.biaya_properti) }}
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr
+                        class="whitespace-nowrap border"
+                        v-show="pesanan.status_pesanan == 'selesai'"
+                      >
+                        <th
+                          class="px-4 py-2 text-gray-500 bg-gray-50 text-center"
+                        >
+                          4
+                        </th>
+                        <th class="p-2 text-gray-500 bg-gray-50 font-bold">
+                          Tambahan
+                        </th>
+                        <td class="p-2">
+                          <div class="text-gray-900">:</div>
+                        </td>
+                        <td class="p-2">
+                          <div class="text-gray-900 capitalize">
+                            <template
+                              v-for="index in id_sparepart.length"
+                              :key="index"
+                            >
+                              <template v-for="sp in sparepart" :key="sp">
+                                <div v-show="sp.id == id_sparepart[index - 1]">
+                                  {{ sp.nama_sparepart }}
+                                  <span
+                                    class="lowercase text-xs"
+                                    v-on:loadeddata="
+                                      $emit(
+                                        (this.biaya_sparepart +=
+                                          sp.harga * qty_sparepart[index - 1])
+                                      )
+                                    "
+                                    >{{
+                                      formatNumber(sp.harga) +
+                                      "x" +
+                                      qty_sparepart[index - 1]
+                                    }}</span
+                                  >
+                                </div>
+                              </template>
+                            </template>
+                          </div>
+                        </td>
+                        <td class="p-2">
+                          <div class="text-gray-900 capitalize">
+                            {{ "Rp." + formatNumber(biaya_part) }}
                           </div>
                         </td>
                       </tr>

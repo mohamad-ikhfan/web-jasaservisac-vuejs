@@ -213,20 +213,6 @@ export default defineComponent({
                         >
                           Teknisi
                         </th>
-                        <th
-                          scope="col"
-                          class="
-                            text-sm
-                            font-medium
-                            text-gray-900
-                            px-6
-                            py-4
-                            text-center
-                            font-bold
-                          "
-                        >
-                          <font-awesome-icon icon="fa-solid fa-gears" />
-                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -270,59 +256,15 @@ export default defineComponent({
                             "
                           >
                             <template
-                              v-for="(index, nik) in row.teknisi"
+                              v-for="nik in String(row.teknisi).split(',')"
                               :key="nik"
                             >
                               <template v-for="tek in teknisi" :key="tek">
-                                <template v-if="tek.nik == row.teknisi[nik]">
-                                  {{ nik + 1 }}. {{ tek.nama_lengkap }}<br />
+                                <template v-if="tek.nik == nik">
+                                  {{ tek.nama_lengkap }}<br />
                                 </template>
                               </template>
                             </template>
-                          </td>
-                          <td
-                            class="
-                              text-sm text-gray-900
-                              font-light
-                              px-6
-                              py-4
-                              whitespace-nowrap
-                            "
-                          >
-                            <Link
-                              class="
-                                text-sm
-                                inline-block
-                                p-1.5
-                                leading-none
-                                bg-green-500
-                                text-white
-                                rounded
-                                mx-1
-                              "
-                              title="Detail"
-                            >
-                              <font-awesome-icon
-                                icon="fa-solid fa-circle-info"
-                              />
-                            </Link>
-                            <Link
-                              class="
-                                text-sm
-                                inline-block
-                                p-1.5
-                                leading-none
-                                bg-yellow-500
-                                text-white
-                                rounded
-                                mx-1
-                              "
-                              title="Ubah"
-                            >
-                              <font-awesome-icon
-                                icon="fa-solid fa-pen-to-square"
-                              />
-                            </Link>
                           </td>
                         </tr>
                       </template>

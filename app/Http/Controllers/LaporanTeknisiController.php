@@ -7,6 +7,7 @@ use App\Models\LaporanTeknisi;
 use App\Models\PesananPelanggan;
 use App\Models\PesanJasa;
 use App\Models\Sparepart;
+use App\Models\StokSparepart;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -56,27 +57,36 @@ class LaporanTeknisiController extends Controller
         ]);
 
         $biaya_part = 0;
-        $part = null;
+
+        $sparepart_id = null;
+        $sparepart_qty = null;
         if ($request->sparepart_id) {
-            // for ($i = 0; $i < $request->sparepart_id; $i++) {
-            //     $request->sparepart_id[$i];
-            //     $request->sparepart_qty[$i];
+            for ($i = 0; $i < count($request->sparepart_id); $i++) {
+                $id = $request->sparepart_id[$i];
+                $qty = $request->sparepart_qty[$i];
 
-            //     // $sparepart = Sparepart::find($id);
-            //     // $harga_part = $sparepart->harga;
-            //     // $biaya_part += $harga_part * $qty;
-            //     // $part = ['id' => $id, 'qty' => $qty];
-            // }
-            for ($i = 0; $i <= $request->sparepart_id; $i++) {
+                $sparepart = Sparepart::find($id);
+                $harga_part = $sparepart->harga;
+                $biaya_part += $harga_part * $qty;
+                $stok = StokSparepart::find($sparepart->id);
+                if ($stok->jumlah < $qty) {
+                    return redirect()->back()->with('message', 'stok sparepart tidak mencukupi.');
+                } else {
+                    $sisa = $stok->jumlah - $qty;
+                    $stok->update([
+                        'jumlah' => $sisa
+                    ]);
+                }
             }
+            $sparepart_id = implode(",", $request->sparepart_id);
+            $sparepart_qty = implode(",", $request->sparepart_qty);
         }
-
-        dd();
 
         LaporanTeknisi::create([
             'no_pesanan' => $request->no_pesanan,
-            'teknisi' => $request->teknisi_nik,
-            'sparepart' => $part,
+            'teknisi' => implode(",", $request->teknisi_nik),
+            'id_sparepart' => $sparepart_id,
+            'qty_sparepart' => $sparepart_qty
         ]);
 
         PesananPelanggan::where('no_pesanan', $request->no_pesanan)->update([
@@ -89,7 +99,8 @@ class LaporanTeknisiController extends Controller
             'status_pesanan' => 'selesai',
             'waktu_selesai' => date_create()->format('d-m-Y'),
             'total_tagihan' => $pesanjasa->first()->total_tagihan + $biaya_part,
-            'sparepart' => $part,
+            'id_sparepart' => $sparepart_id,
+            'qty_sparepart' => $sparepart_qty
         ]);
 
         return redirect(route('laporan-teknisi.index'))->with('message', 'Laporan berhasil di buat.');

@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('stok_spareparts', function (Blueprint $table) {
             $table->id();
             $table->integer('id_sparepart');
-            $table->enum('tipe', ['masuk', 'keluar']);
             $table->double('jumlah');
             $table->timestamps();
         });

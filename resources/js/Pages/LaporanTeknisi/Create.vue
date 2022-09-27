@@ -288,7 +288,7 @@ export default defineComponent({
                             :value="row.id"
                           >
                             {{ row.nama_sparepart }}
-                            (
+                            ({{ "stok: " + row.jumlah }}) (
                             {{ "Rp." + formatNumber(row.harga) }}
                             )
                           </option>
