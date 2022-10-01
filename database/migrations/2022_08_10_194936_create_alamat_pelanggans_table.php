@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('alamat_pelanggans', function (Blueprint $table) {
             $table->id();
             $table->integer('id_pelanggan');
-            $table->string('label')->unique();
+            $table->string('label');
             $table->string('atas_nama');
             $table->string('no_hp');
             $table->string('alamat_lengkap');

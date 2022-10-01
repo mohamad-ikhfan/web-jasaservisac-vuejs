@@ -28,6 +28,8 @@
         "@fortawesome/free-solid-svg-icons": "^6.1.2",
         "@fortawesome/vue-fontawesome": "^3.0.1",
         "@vuepic/vue-datepicker": "^3.4.2",
+        "html2canvas": "^1.4.1",
+        "jspdf": "^2.5.1",
         "moment": "^2.29.4",
         "tw-elements": "^1.0.0-alpha12"
     }

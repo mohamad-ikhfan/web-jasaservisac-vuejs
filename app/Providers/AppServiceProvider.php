@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Karyawan;
+use App\Models\PesanJasa;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;

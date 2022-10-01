@@ -140,6 +140,41 @@ class PesanJasaController extends Controller
         ]);
     }
 
+    public function invoice($id)
+    {
+        $pesanan = PesanJasa::select('pesan_jasas.*', 'kategori_layanans.nama_kategori', 'jenis_layanans.nama_layanan', 'jenis_layanans.harga', 'propertis.properti', 'propertis.biaya_properti', 'alamat_pelanggans.label', 'alamat_pelanggans.atas_nama', 'alamat_pelanggans.no_hp', 'alamat_pelanggans.alamat_lengkap', 'alamat_pelanggans.patokan')
+            ->join('kategori_layanans', 'kategori_layanans.id', '=', 'pesan_jasas.id_kategori')
+            ->join('jenis_layanans', 'jenis_layanans.id', '=', 'pesan_jasas.id_layanan')
+            ->join('propertis', 'propertis.id', '=', 'pesan_jasas.id_properti')
+            ->join('alamat_pelanggans', 'alamat_pelanggans.id', '=', 'pesan_jasas.id_alamat')
+            ->where('no_pesanan', $id)->first();
+
+
+        $sparepart = Sparepart::all();
+        $biaya_part = 0;
+
+        if ($pesanan->status_pesanan == 'selesai' && $pesanan->id_sparepart != null) {
+            $sparepart_id = explode(",", $pesanan->id_sparepart);
+            $sparepart_qty = explode(",", $pesanan->qty_sparepart);
+            for ($i = 0; $i < count($sparepart_id); $i++) {
+                $id = $sparepart_id[$i];
+                $qty =  $sparepart_qty[$i];
+
+                $sparepartis = Sparepart::find($id);
+
+                $harga_part = $sparepartis->harga;
+
+                $biaya_part += $harga_part * $qty;
+            }
+        }
+
+        return Inertia::render('PesanJasa/Print', [
+            'pesanan' => $pesanan,
+            'sparepart' => $sparepart,
+            'biaya_part' => $biaya_part
+        ]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
